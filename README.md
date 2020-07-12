@@ -1,6 +1,6 @@
 # OF DevOps / SRE Challenge
 
-This challenge was done under ArchLinux and tested with the following setup to emulate K8S in a local running setup
+This challenge was done under Manjaro (ArchLinux) and tested with the following setup to emulate K8S in a local running setup
 ( AMD Ryzen 9 3900X 12-Core Processor =] )
 
 ## Requirements
