@@ -1,73 +1,86 @@
+# OF DevOps / SRE Challenge
 
-Devops / SRE TakeHome Hiring Process
+This challenge was done under ArchLinux and tested with the following setup to emulate K8S in a local running setup (AMD Ryzen 9 3900X 12-Core Processor =])
 
----
+## Requirements
 
-## Challenge Introduction
-It is designed to challenge and provide an instructive and fun experience.
-It should demonstrate that you understand the world of containers and microservices.
+Linux / MacOS no Windows :D
 
-We know that you are probably very busy, and we won't discard your submission because of that. Feel free to just describe your solutions if you run out of time, but we'd prefer code and a working environment. Even if you describe your solution, make sure to include plenty of detail to help to show exactly what factors you have considered.
+- Docker 19.03.11-ce
+- Minikube x.x.x
+- Helm 3.2.4
 
-Feel free to ask questions, and we will respond to you on your board.
-Feel free to contact us for any further information about the role.
+## Setting up local FQDN DNS resolution
 
-## In general:
+to have easy smooth dns resolving working locally and not IP kungfoo please add these lines to your /etc/hosts file
 
-- Take as much time as you want but we wish to hear from you within a week. 
-- Please, explain your solutions in detail, to allow us to see everything that you have considered.
-- You don't need to finish all the tasks. Share your results even if you don't finish.
-- Small, meaningful commits are recommended.
-- Your workflow is important as it shows us that you are systematic in your approach to work.
-
-All the best!
-
----
-
-## Components
-
-### 1. Simple Service Webapp
-
-We have a `as simple as possible` Golang application, and your first mission is to create a Docker image for it. 
-
-Checkout the project: https://github.com/Onefootball/simple-service.git
-
-- Create a `Dockerfile` for it.
-- Push it to an **container repository** (ecr, gcr, docker-hub etc) of your choice. Why? Needed in `[2]`
-
-Please use the private `GitHub` repository created for you and commit your work there.
-So, In the end, we will review your steps and decide the next step in the interview process.
-
----
-
-### 2. Setup Kubernetes
-
-- Install `kubeadm` or `minikube` in your local workstation to deploy image build in `[1]`.
-- Create K8s' `Service` running with `HPA` configured to use CPU for scaling.
-- Deploy a `StatefulSet pod` which needs persistency. You can deploy anything, for ex: Mysql, Redis, PostgreSQL, RabbitMQ and so on.
-- Extend the app built in `[1]` or create another app (if you are not comfortable with golang) which can do simple interaction (for ex: [redis ping-pong](https://redis.io/commands/ping)) with the stateful pod.
-
----
-
-### 3. Monitoring (Prometheus/Grafana)
-
-- Setup basic `monitoring` for the StatefulSet pod (**sidecar container** can be helpful if container natively doesn't expose metrics) which can be scraped by prometheus engine.
-- Deploy `Prometheus` for monitoring targets (only stateful services)
-- `[BONUS]` Deploy `Grafana` to plot dashboard. Grafana community has dashboards which can be used in this case. 
-
-Examples:
-- https://grafana.com/grafana/dashboards/763
-- https://grafana.com/grafana/dashboards/4279
-- https://grafana.com/grafana/dashboards/4031
-
----
-
-### Feedback
-
-Even if you are not able to complete, please give us feedback on how was your experience with this assignment in a `.md` file.
+first get the Private IP of the Ingress
 
 ```
-# FEEDBACK.md
-- Did you like the test? To difficult, To easy, Ah! Its Okay
-- How much time did you spend?
+kubectl get ingress -A
 ```
+should look like this
+```
+monitoring      prometheus-operator-alertmanager   <none>   alertmanager.ofc    192.168.99.100   80      109m
+monitoring      prometheus-operator-grafana        <none>   grafana.ofc         192.168.99.100   80      109m
+monitoring      prometheus-operator-prometheus     <none>   prometheus.ofc      192.168.99.100   80      109m
+simpleservice   simpleservice-simple-service       <none>   simpleservice.ofc   192.168.99.100   80      7m
+```
+
+so **192.168.99.100** is mine.
+replace <PUTYOURIPHERE> with yours =]
+
+open **/etc/hosts** with your fav editor and add
+```
+<PUTYOURIPHERE> alertmanager.ofc
+<PUTYOURIPHERE> grafana.ofc
+<PUTYOURIPHERE> prometheus.ofc
+<PUTYOURIPHERE> simpleservice.ofc
+```
+
+an now we have easy accessible FQDN from your local desktop useable
+
+http://simpleservice.ofc/live
+
+## Local K8S setup
+
+Minikube with KVM - docker gave me network trouble :/
+
+Since im on linux i used minikube with KVM support which worked without problems.
+
+TODO: split up bash scripts one for raising minikube - the other for deploying the rest
+
+## Simple Service
+
+http://prometheus.ofc
+
+TODO: if time - switch to linuxkit https://github.com/linuxkit/kubernetes
+
+### Dockerfile
+
+
+### Helmcharts
+
+we use Helm to install some charts
+
+#### postgres
+
+PostgreSQL can be accessed via port 5432 on the following DNS name from within your cluster:
+
+    postgres-postgresql.postgres.svc.cluster.local - Read/Write connection
+
+To get the password for "postgres" run:
+
+    export POSTGRES_PASSWORD=$(kubectl get secret --namespace postgres postgres-postgresql -o jsonpath="{.data.postgresql-password}" | base64 --decode)
+
+To connect to your database run the following command:
+
+    kubectl run postgres-postgresql-client --rm --tty -i --restart='Never' --namespace postgres --image docker.io/bitnami/postgresql:11.8.0-debian-10-r57 --env="PGPASSWORD=$POSTGRES_PASSWORD" --command -- psql --host postgres-postgresql -U postgres -d postgres -p 5432
+
+### prometheus-operator
+
+http://prometheus.ofc/targets
+
+### HPA
+
+##
