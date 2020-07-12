@@ -41,7 +41,9 @@ open **/etc/hosts** with your fav editor and add
 
 an now we have easy accessible FQDN from your local desktop useable
 
-http://simpleservice.ofc/live
+Example: http://simpleservice.ofc/live
+
+TODO: if time - make this automatic via bash kungfo
 
 ## Local K8S setup
 
@@ -49,6 +51,11 @@ Minikube with KVM - docker gave me network trouble :/ and i dont wanted to waste
 
 KVM is Linux Native - so no MacOS Support AFAIK
 
+Feature:
+if it would be still alphaish :D
+
+Kubernetes on firecracker (KVM)
+https://github.com/weaveworks/ignite
 
 ## Simple Service
 
@@ -61,7 +68,13 @@ The simple-service binary is running as a non privileged user.
 
 TODO: if time - switch to linuxkit https://github.com/linuxkit/kubernetes
 
-### Helmcharts
+### simple-service Helmchart
+
+HPA is enabled
+
+TODO: test it
+
+## Helmcharts
 
 we use Helm 3 to install some charts
 
@@ -91,6 +104,8 @@ configured to read all ServiceMonitors in all namespaces.
 URL: http://prometheus.ofc/
 URL: http://grafana.ofc/
 URL: http://alertmanager.ofc/
+
+TODO: make a nice overview dashboard for simple service
 
 
 
