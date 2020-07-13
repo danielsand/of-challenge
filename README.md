@@ -107,5 +107,30 @@ URL: http://alertmanager.ofc/
 
 TODO: make a nice overview dashboard for simple service
 
+##### Redis
+
+configured with ServiceMonitor default setup to add to simple-service as ping pong examples
+
+```
+** Please be patient while the chart is being deployed **
+Redis can be accessed via port 6379 on the following DNS names from within your cluster:
+
+redis-master.redis.svc.cluster.local for read/write operations
+redis-slave.redis.svc.cluster.local for read-only operations
 
 
+To get your password run:
+
+    export REDIS_PASSWORD=$(kubectl get secret --namespace redis redis -o jsonpath="{.data.redis-password}" | base64 --decode)
+
+To connect to your Redis server:
+
+1. Run a Redis pod that you can use as a client:
+   kubectl run --namespace redis redis-client --rm --tty -i --restart='Never' \
+    --env REDIS_PASSWORD=$REDIS_PASSWORD \
+   --image docker.io/bitnami/redis:6.0.5-debian-10-r32 -- bash
+
+2. Connect using the Redis CLI:
+   redis-cli -h redis-master -a $REDIS_PASSWORD
+   redis-cli -h redis-slave -a $REDIS_PASSWORD
+```
