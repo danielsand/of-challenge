@@ -1,6 +1,7 @@
 # OF DevOps / SRE Challenge
 
-This challenge was done under ArchLinux and tested with the following setup to emulate K8S in a local running setup (AMD Ryzen 9 3900X 12-Core Processor =])
+This challenge was done under Manjaro (ArchLinux) and tested with the following setup to emulate K8S in a local running setup
+( AMD Ryzen 9 3900X 12-Core Processor =] )
 
 ## Requirements
 
@@ -12,7 +13,7 @@ Linux / MacOS no Windows :D
 
 ## Setting up local FQDN DNS resolution
 
-to have easy smooth dns resolving working locally and not IP kungfoo please add these lines to your /etc/hosts file
+to have easy smooth dns resolving working locally and not IP kungfoo please add these lines to your **/etc/hosts** file
 
 first get the Private IP of the Ingress
 
@@ -40,31 +41,46 @@ open **/etc/hosts** with your fav editor and add
 
 an now we have easy accessible FQDN from your local desktop useable
 
-http://simpleservice.ofc/live
+Example: http://simpleservice.ofc/live
+
+TODO: if time - make this automatic via bash kungfo
 
 ## Local K8S setup
 
-Minikube with KVM - docker gave me network trouble :/
+Minikube with KVM - docker gave me network trouble :/ and i dont wanted to waste more time to fix the docker overlay network.
 
-Since im on linux i used minikube with KVM support which worked without problems.
+KVM is Linux Native - so no MacOS Support AFAIK
 
-TODO: split up bash scripts one for raising minikube - the other for deploying the rest
+Feature:
+if it would be still alphaish :D
+
+Kubernetes on firecracker (KVM)
+https://github.com/weaveworks/ignite
 
 ## Simple Service
 
-http://prometheus.ofc
-
-TODO: if time - switch to linuxkit https://github.com/linuxkit/kubernetes
+http://simpleservice.ofc
 
 ### Dockerfile
 
+We use alpinelinux to build the simple-service golang code inside.
+The simple-service binary is running as a non privileged user.
 
-### Helmcharts
+TODO: if time - switch to linuxkit https://github.com/linuxkit/kubernetes
 
-we use Helm to install some charts
+### simple-service Helmchart
+
+HPA is enabled
+
+TODO: test it
+
+## Helmcharts
+
+we use Helm 3 to install some charts
 
 #### postgres
 
+```
 PostgreSQL can be accessed via port 5432 on the following DNS name from within your cluster:
 
     postgres-postgresql.postgres.svc.cluster.local - Read/Write connection
@@ -76,11 +92,20 @@ To get the password for "postgres" run:
 To connect to your database run the following command:
 
     kubectl run postgres-postgresql-client --rm --tty -i --restart='Never' --namespace postgres --image docker.io/bitnami/postgresql:11.8.0-debian-10-r57 --env="PGPASSWORD=$POSTGRES_PASSWORD" --command -- psql --host postgres-postgresql -U postgres -d postgres -p 5432
+```
 
-### prometheus-operator
+TODO: change the prometheus exporter at the end to https://github.com/wrouesnel/postgres_exporter it supports a nice grafana dashboard
+https://grafana.com/grafana/dashboards/12485
 
-http://prometheus.ofc/targets
+#### prometheus-operator
 
-### HPA
+configured to read all ServiceMonitors in all namespaces.
 
-##
+URL: http://prometheus.ofc/
+URL: http://grafana.ofc/
+URL: http://alertmanager.ofc/
+
+TODO: make a nice overview dashboard for simple service
+
+
+
