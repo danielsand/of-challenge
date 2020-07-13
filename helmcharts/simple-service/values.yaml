@@ -6,7 +6,9 @@
 env:
   PORT: "8000"
   POSTGRES_URL: "postgres://simpleservice:simpleservice@postgres-postgresql.postgres.svc.cluster.local/simpleservice?sslmode=disable"
-
+  REDIS_HOST: "redis-master.redis.svc.cluster.local:6379"
+  REDIS_PW: "redis"
+  
 replicaCount: 1
 
 image:
