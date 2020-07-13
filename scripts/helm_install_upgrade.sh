@@ -8,7 +8,7 @@ helm -n monitoring upgrade --install prometheus-operator -f helmcharts/prometheu
 # install via helm postgres chart
 
 kubectl create ns postgres
-helm -n postgres upgrade --install postgres -f helmcharts/postgres/values.yaml helmcharts/postgresql/
+helm -n postgres upgrade --install postgres -f helmcharts/postgresql/values.yaml helmcharts/postgresql/
 
 # install simple-service
 
