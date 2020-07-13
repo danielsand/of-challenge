@@ -2,6 +2,11 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+# simple-service environment variables
+env:
+  PORT: "8000"
+  POSTGRES_URL: "postgres://simpleservice:simpleservice@postgres-postgresql.postgres.svc.cluster.local/simpleservice?sslmode=disable"
+
 replicaCount: 1
 
 image:
