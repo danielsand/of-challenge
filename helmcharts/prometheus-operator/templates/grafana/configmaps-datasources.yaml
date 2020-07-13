@@ -36,3 +36,8 @@ data:
 {{ tpl (toYaml .Values.grafana.additionalDataSources | indent 4) . }}
 {{- end }}
 {{- end }}
+    - name: Loki
+      type: loki
+      url: http://loki-stack.loki.svc.cluster.local:3100/
+      access: proxy
+      version: 1

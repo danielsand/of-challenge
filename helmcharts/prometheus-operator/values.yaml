@@ -536,7 +536,6 @@ grafana:
     datasources:
       enabled: true
       defaultDatasourceEnabled: true
-
       ## Annotations for Grafana datasource configmaps
       ##
       annotations: {}
