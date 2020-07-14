@@ -1,5 +1,19 @@
 # OF DevOps / SRE Challenge
 
+Quickstart
+
+```
+git clone git@github.com:Onefootball-Core-Platform-Interviewer/Daniel.git
+cd Daniel
+bash turnkey.sh
+```
+or
+
+[![Tour through the Challenge](https://i.pinimg.com/originals/7b/aa/25/7baa252dbdfeed669c152bedd2fa5feb.jpg)](https://youtu.be/ox_gZyX_oCA)
+
+
+**TLDR**
+
 This challenge was done under Manjaro (ArchLinux) and tested with the following setup to emulate K8S in a local running setup
 ( AMD Ryzen 9 3900X 12-Core Processor =] )
 
