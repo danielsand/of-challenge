@@ -46,7 +46,8 @@ fi
 bash scripts/helm_install_upgrade.sh
 bash scripts/grafana_import_dasboards.sh
 
-echo "* sleep another 30 seconds - ingress needs a second to get started"
+echo "* sleep another 60 seconds - ingress needs a second to get started"
+sleep 60
 
 INGRESS_IP=`kubectl get ing -o wide -A |awk '{ print $5 }' |grep -v ADDRESS | uniq`
 
