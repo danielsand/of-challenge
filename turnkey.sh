@@ -69,6 +69,7 @@ else
   echo "please add the following lines to your /etc/hosts file"
   echo "--------------------------------"
   echo "* Lets check if the /etc/hosts file is in the right setup with ${INGRESS_IP}"
+  echo "--------------------------------"
   echo "${INGRESS_IP} alertmanager.ofc"
   echo "${INGRESS_IP} grafana.ofc"
   echo "${INGRESS_IP} prometheus.ofc"
