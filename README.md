@@ -9,7 +9,7 @@ bash turnkey.sh
 ```
 or click on the image to watch the **Tour through the Challenge Video**
 
-[![Tour through the Challenge](https://img.youtube.com/vi/ox_gZyX_oCA/hqdefault.jpg)](https://youtu.be/ox_gZyX_oCA)
+[![Tour through the Challenge](https://img.youtube.com/vi/Wi6-7wGvsnc/hqdefault.jpg)](https://youtu.be/Wi6-7wGvsnc)
 
 **TLDR**
 
