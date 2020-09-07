@@ -3,8 +3,8 @@
 Quickstart
 
 ```
-git clone git@github.com:Onefootball-Core-Platform-Interviewer/Daniel.git
-cd Daniel
+git clone git@github.com:danielsand/of-challenge.git
+cd of-challenge
 bash turnkey.sh
 ```
 or click on the image to watch the **Tour through the Challenge Video**
